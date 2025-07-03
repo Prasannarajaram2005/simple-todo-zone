@@ -1,9 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { Todo, FilterType } from '@/types/todo';
 import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
 import TodoFilters from './TodoFilters';
+import { Button } from '@/components/ui/button';
+import { LogIn } from 'lucide-react';
 import { toast } from 'sonner';
 
 const TodoApp = () => {
@@ -107,9 +108,21 @@ const TodoApp = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4">
       <div className="max-w-2xl mx-auto pt-8">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-            My Todo List
-          </h1>
+          <div className="flex justify-between items-center mb-4">
+            <div></div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              My Todo List
+            </h1>
+            <Button
+              variant="outline"
+              size="sm"
+              className="bg-white/60 hover:bg-white/80"
+              onClick={() => window.location.href = '/login'}
+            >
+              <LogIn className="w-4 h-4 mr-2" />
+              Login
+            </Button>
+          </div>
           <p className="text-gray-600 text-lg">
             Stay organized and productive
           </p>
