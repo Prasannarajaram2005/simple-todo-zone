@@ -18,6 +18,7 @@ const TodoApp = () => {
         const parsedTodos = JSON.parse(savedTodos).map((todo: any) => ({
           ...todo,
           createdAt: new Date(todo.createdAt),
+          isEditing: false,
         }));
         setTodos(parsedTodos);
       } catch (error) {
@@ -37,6 +38,7 @@ const TodoApp = () => {
       text,
       completed: false,
       createdAt: new Date(),
+      isEditing: false,
     };
     setTodos([newTodo, ...todos]);
     toast.success('Todo added successfully!');
@@ -57,6 +59,31 @@ const TodoApp = () => {
   const deleteTodo = (id: string) => {
     setTodos(todos.filter(todo => todo.id !== id));
     toast.success('Todo deleted successfully!');
+  };
+
+  const startEditTodo = (id: string) => {
+    setTodos(todos.map(todo => 
+      todo.id === id 
+        ? { ...todo, isEditing: true }
+        : { ...todo, isEditing: false }
+    ));
+  };
+
+  const editTodo = (id: string, newText: string) => {
+    setTodos(todos.map(todo => 
+      todo.id === id 
+        ? { ...todo, text: newText, isEditing: false }
+        : todo
+    ));
+    toast.success('Todo updated successfully!');
+  };
+
+  const cancelEditTodo = (id: string) => {
+    setTodos(todos.map(todo => 
+      todo.id === id 
+        ? { ...todo, isEditing: false }
+        : todo
+    ));
   };
 
   const filteredTodos = todos.filter(todo => {
@@ -117,6 +144,9 @@ const TodoApp = () => {
                   todo={todo}
                   onToggle={toggleTodo}
                   onDelete={deleteTodo}
+                  onEdit={editTodo}
+                  onStartEdit={startEditTodo}
+                  onCancelEdit={cancelEditTodo}
                 />
               ))
             )}
